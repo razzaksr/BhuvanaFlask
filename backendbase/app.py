@@ -1,4 +1,5 @@
-from flask import Flask,render_template, request
+from pyexpat import model
+from flask import Flask, redirect,render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 app=Flask(__name__)
@@ -26,16 +27,24 @@ class profiles(buvana.Model):
 
     def __repr__(self) -> str:
         return f"{self.person} - {self.role}"
+
+@app.route("/",methods=['GET'])
+def traverse():
+    hai=profiles.query.all()
+    return render_template('listing.html',every=hai)
     
 @app.route("/new",methods=['GET','POST'])
 def process():
+    #buvana.create_all() # to create table
     if request.method=="GET":
         return render_template('newone.html')
     else:
         pro=profiles(request.form['person'],request.form['experience'],request.form['role'],request.form['ctc'],request.form['expected'])
-        buvana.session.save(pro)
+        buvana.session.add(pro)
         buvana.session.commit()
-        return render_template('newone.html',info="Object saved")
+        return redirect('/')
+        
+        
 
 if __name__=="__main__":
     app.run(debug=True)
