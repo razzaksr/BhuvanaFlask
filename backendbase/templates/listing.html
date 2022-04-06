@@ -1,5 +1,6 @@
 {%extends 'parent.html'%}
     {%block users%}
+        <p>{{session.who}}</p>
         <a class="btn btn-primary col-1 float-start m-5" href="/new">
             <i class="bi bi-door-open"></i>
         </a>
@@ -16,10 +17,10 @@
                         <p class="display-6 card-text float-start">{{x.ctc}}</p>
                         <p class="display-6 card-text float-end">{{x.expected}}</p>
                         <hr color="white" width="100%"/>
-                        <a class="btn btn-outline-warning float-start" href="#">
+                        <a class="btn btn-outline-info float-start" href="/update/{{x.id}}">
                             <i class="bi bi-box-arrow-in-right"></i>
                         </a>
-                        <a class="btn btn-outline-danger float-end" href="#">
+                        <a class="btn btn-outline-dark float-end" href="/delete/{{x.id}}">
                             <i class="bi bi-trash2-fill"></i>
                         </a>
                     </div>

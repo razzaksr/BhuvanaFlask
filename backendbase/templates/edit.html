@@ -1,0 +1,37 @@
+{%extends 'parent.html'%}
+    {%block users%}
+            <form action="/update/{{object.id}}" method="POST" class="col-lg-7 col-md-10 col-sm-12 shadow rounded p-3">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <label>Person Name</label>
+                        <input type="text" value="{{object.person}}" name="person" class="form-control" placeholder="Person name">
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <label>Person Role</label>
+                        <input type="text" value="{{object.role}}" name="role" class="form-control" placeholder="Person role">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Experience</label>
+                    <input type="text" value="{{object.experience}}" name="experience" placeholder="Experience" class="form-control">
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-12">
+                        <label>Current CTC</label>
+                        <input type="text" value="{{object.ctc}}" name="ctc" class="form-control" placeholder="Current CTC">
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <label>Expected CTC</label>
+                        <input type="text" value="{{object.expected}}" name="expected" class="form-control" placeholder="Expected CTC">
+                    </div>
+                </div>
+                <div class="row justify-content-around mt-3">
+                    <button class="col-1 btn btn-outline-success" type="submit">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                    <button class="col-1 btn btn-outline-success" type="reset">
+                        <i class="bi bi-x-octagon-fill"></i>
+                    </button>
+                </div>
+            </form>
+    {%endblock users%}
