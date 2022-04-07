@@ -28,6 +28,22 @@ class profiles(buvana.Model):
     def __repr__(self) -> str:
         return f"{self.person} - {self.role}"
     
+@app.route("/short",methods=['GET','POST'])
+def shorting():
+    if not session.get('who'):
+        return render_template("login.html")
+    else:
+        if request.method=="POST":
+            e=request.form['exp']
+            #print(e)
+            pro=profiles.query.filter_by(experience=e)
+            print(type(pro),pro)
+            ha=[]
+            ha.append(pro)
+            return render_template('listing.html',every=pro)
+        else:
+            return render_template('short.html')
+    
 @app.route("/logout",methods=['GET'])
 def out():
     session['who']=None

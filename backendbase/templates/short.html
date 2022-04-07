@@ -1,0 +1,13 @@
+{%extends 'parent.html'%}
+    {%block users%}
+        <form action="/short" method="POST">
+            <select name="exp">
+                <option>Select exp</option>
+                <option>10</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+            <input type="submit" value="short">
+        </form>
+    {%endblock%}
