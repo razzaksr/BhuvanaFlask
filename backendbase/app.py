@@ -1,5 +1,8 @@
-from flask import Flask, make_response, redirect,render_template, request,Response, session
+from dataclasses import fields
+from flask import Flask, jsonify, make_response, redirect,render_template, request,Response, session
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+from flask_cors import CORS
 
 app=Flask(__name__)
 
@@ -7,6 +10,8 @@ app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@localhost:3306/bhuvana'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]=False
 buvana=SQLAlchemy(app)
+marsh=Marshmallow(app)
+CORS(app)
 app.secret_key="bhuvana"
 
 #model
@@ -28,6 +33,33 @@ class profiles(buvana.Model):
     def __repr__(self) -> str:
         return f"{self.person} - {self.role}"
     
+
+class ProfileSchema(marsh.Schema):
+    class Meta:
+        fields=('id','person','role','experience','ctc','expected')
+        
+
+# schema object for one profile object to serialize and deserialize
+profile_scheme=ProfileSchema()
+# schema object for many profiles object to serialize and deserialize
+profiles_schemes=ProfileSchema(many=True)
+
+
+# rest api>> json, jsonify
+
+@app.route("/rest/",methods=['GET'])
+def toAll():
+    all=profiles.query.all()
+    obj=profiles_schemes.dump(all)
+    return jsonify(obj)
+
+
+
+
+
+
+
+# jinja response
 @app.route("/short",methods=['GET','POST'])
 def shorting():
     if not session.get('who'):
