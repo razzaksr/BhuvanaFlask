@@ -53,8 +53,38 @@ def toAll():
     obj=profiles_schemes.dump(all)
     return jsonify(obj)
 
+@app.route("/rest/<int:data>",methods=['GET'])
+def toOne(data):
+    #print(data)
+    obj=profiles.query.filter_by(id=data).first()
+    #print(obj)
+    return profile_scheme.jsonify(obj)
 
+@app.route("/rest/",methods=['POST'])
+def toAdd():
+    obj=profiles(request.json['person'],request.json['experience'],request.json['role'],request.json['ctc'],request.json['expected'])
+    buvana.session.add(obj)
+    buvana.session.commit()
+    return profile_scheme.jsonify(obj)
 
+@app.route("/rest/<int:key>",methods=['PUT'])
+def toUpdate(key):
+    obj=profiles.query.filter_by(id=key).first()
+    obj.person=request.json['person']
+    obj.experience=request.json['experience']
+    obj.role=request.json['role']
+    obj.ctc=request.json['ctc']
+    obj.expected=request.json['expected']
+    
+    buvana.session.commit()
+    return profile_scheme.jsonify(obj)
+
+@app.route("/rest/<int:term>",methods=['DELETE'])
+def toRemove(term):
+    obj=profiles.query.filter_by(id=term).first()
+    buvana.session.delete(obj)
+    buvana.session.commit()
+    return profile_scheme.jsonify(obj)
 
 
 
