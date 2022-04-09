@@ -53,6 +53,25 @@ def toAll():
     obj=profiles_schemes.dump(all)
     return jsonify(obj)
 
+@app.route("/rest/name/<data>",methods=['GET'])
+def toName(data):
+    pro=profiles.query.filter(profiles.person.like(f"%{data}%")).all()
+    obj=profiles_schemes.dump(pro)
+    return jsonify(obj)
+
+@app.route("/rest/sal/<float:data>",methods=['GET'])
+def toExcpected(data):
+    pro=profiles.query.filter(profiles.expected<=data).all()
+    #pro=profiles.query.filter(or_(profiles.expected<=data,profiles.expected<=data)).all()
+    obj=profiles_schemes.dump(pro)
+    return jsonify(obj)
+
+@app.route("/rest/role/<data1>/<data2>",methods=['GET'])
+def toRole(data1,data2):
+    pro=profiles.query.filter(profiles.role.in_([f"{data1}",f"{data2}"])).all()
+    obj=profiles_schemes.dump(pro)
+    return jsonify(obj)
+
 @app.route("/rest/<int:data>",methods=['GET'])
 def toOne(data):
     #print(data)
