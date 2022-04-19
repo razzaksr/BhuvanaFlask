@@ -116,9 +116,15 @@ def shorting():
     else:
         if request.method=="POST":
             e=request.form['exp']
-            #print(e)
-            pro=profiles.query.filter_by(experience=e)
-            print(type(pro),pro)
+            p=request.form['phrase']
+            print(e,p)
+            if e!="Select exp" and p=="":
+                pro=profiles.query.filter_by(experience=e)
+            elif e=="Select exp" and p!="":
+                pro=profiles.query.filter(profiles.person.like(f"{p}%")).all()
+            else:
+                pro=[]
+            #print(type(pro),pro)
             ha=[]
             ha.append(pro)
             return render_template('listing.html',every=pro)

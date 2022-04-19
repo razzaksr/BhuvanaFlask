@@ -1,13 +1,15 @@
 {%extends 'parent.html'%}
     {%block users%}
-        <form action="/short" method="POST">
-            <select name="exp">
+        <form action="/short" method="POST" class="col-6">
+            <input type="text" name="phrase" class="form-control">
+            <h1 class="text-center">OR</h1>
+            <select name="exp" class="form-select">
                 <option>Select exp</option>
                 <option>10</option>
                 <option>2</option>
                 <option>3</option>
                 <option>4</option>
             </select>
-            <input type="submit" value="short">
+            <input type="submit" class="btn btn-outline-primary" value="short">
         </form>
     {%endblock%}
